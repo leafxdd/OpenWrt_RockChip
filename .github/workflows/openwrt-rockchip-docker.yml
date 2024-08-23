@@ -95,6 +95,7 @@ jobs:
     - name: Install Feeds
       run: |
         cd $OPENWRTROOT
+        ./scripts/feeds update -a
         ./scripts/feeds install -a
         rm -rf feeds/packages/lang/golang
         git clone https://github.com/sbwml/packages_lang_golang -b 23.x feeds/packages/lang/golang
@@ -128,21 +129,22 @@ jobs:
       run: |
         cd $OPENWRTROOT
         cat .config
-        make download -j50
         make download -j8
+        make download -j1 V=s
         find dl -size -1024c -exec ls -l {} \;
         find dl -size -1024c -exec rm -f {} \;
+        make download -j1 V=s
   
     - name: Compile Packages
       id: compile
       run: |
         cd $OPENWRTROOT
         echo -e "$(nproc) thread compile"
-        make tools/compile -j$(nproc) || make tools/compile -j$(nproc)
-        make toolchain/compile -j$(nproc) || make toolchain/compile -j$(nproc)
-        make target/compile -j$(nproc) || make target/compile -j$(nproc) IGNORE_ERRORS=1
+        make tools/compile -j$(nproc) || make tools/compile -j1 V=s
+        make toolchain/compile -j$(nproc) || make toolchain/compile --j1 V=s
+        make target/compile -j$(nproc) || make target/compile -j1 V=s
         make diffconfig
-        make package/compile -j$(nproc) IGNORE_ERRORS=1 || make package/compile -j$(nproc) IGNORE_ERRORS=1
+        make package/compile -j$(nproc) || make package/compile -j1 V=s
         make package/index
         cd $OPENWRTROOT/bin/packages/*
         PLATFORM=$(basename `pwd`)
