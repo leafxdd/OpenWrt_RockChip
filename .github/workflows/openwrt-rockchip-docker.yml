@@ -79,6 +79,11 @@ jobs:
       uses: Dup4/actions-setup-gcc@v1
       with:
         version: latest
+
+    - name: Make Sure Gcc Is Correct
+      run: |
+        gcc -v
+        g++ -v
         
     - name: Clone Source Code
       run: |
