@@ -75,6 +75,11 @@ jobs:
         [ -f /etc/issue ] && cat /etc/issue
         ulimit -a
         
+    - name: Setup GCC
+      uses: Dup4/actions-setup-gcc@v1
+      with:
+        version: latest
+        
     - name: Clone Source Code
       run: |
         df -hT $PWD
