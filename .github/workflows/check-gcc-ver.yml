@@ -6,7 +6,7 @@
 # Blog: https://p3terx.com
 #=================================================
 
-name: openwrt-rockchip-docker
+name: check-gcc-ver
 
 on:
   repository_dispatch:
