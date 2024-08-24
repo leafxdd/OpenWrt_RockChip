@@ -64,7 +64,7 @@ jobs:
     - name: Freeing up disk space
       uses: easimon/maximize-build-space@master
       with: 
-        root-reserve-mb: 2048
+        root-reserve-mb: 3072
         swap-size-mb: 1
         remove-dotnet: 'true'
         remove-android: 'true'
@@ -72,12 +72,10 @@ jobs:
         remove-codeql: 'true'
         remove-docker-images: 'true'
 
-    - name: Free up disk space complete
-      run: |
-        echo "Free up disk space complete"
-        echo "=============================================================================="
-        df -hT
-        echo "=============================================================================="
+    - name: Setup GCC
+      uses: egor-tensin/setup-gcc@master
+      with:
+        version: 13
     
     - name: Initialization Environment
       env:
@@ -97,15 +95,34 @@ jobs:
         /usr/local/share/powershell /usr/local/share/chromium /usr/local/lib/node_modules
         sudo timedatectl set-timezone "$TZ"
         sudo chown $USER:$GROUPS $GITHUB_WORKSPACE
-
-    - name: Setup GCC
-      uses: egor-tensin/setup-gcc@master
-      with:
-        version: 13
   
-    - name: test
+    - name: Check Server Performance
       run: |
-        gcc -v
-        g++ -v
-        clang -v
+        echo "警告⚠"
+        echo "分配的服务器性能有限，若选择的插件过多，务必注意CPU性能！"
+        echo -e "已知CPU型号(降序): 7763，8370C，8272CL，8171M，E5-2673\n"
+        echo "--------------------------CPU信息--------------------------"
+        echo "CPU物理数量: $(cat /proc/cpuinfo | grep "physical id" | sort | uniq | wc -l)"
+        echo "CPU核心数量: $(nproc)"
+        echo -e "CPU型号信息:$(cat /proc/cpuinfo | grep -m1 name | awk -F: '{print $2}')\n"
+        echo "--------------------------内存信息--------------------------"
+        echo "已安装内存详细信息:"
+        echo -e "$(sudo lshw -short -C memory | grep GiB)\n"
+        echo "--------------------------硬盘信息--------------------------"
+        echo "硬盘数量: $(ls /dev/sd* | grep -v [1-9] | wc -l)" && df -hT
         df -hT
+        echo "--------------------------GCC------------------------------"
+        gcc -v
+        echo "--------------------------G++------------------------------"
+        g++ -v
+        echo "--------------------------Clang----------------------------"
+        clang -v
+        echo "------------------------------------------------------------"
+        
+    - name: Clone Source Code
+      working-directory: ./
+      run: |
+        df -hT $PWD
+        git clone $REPO_URL -b $REPO_BRANCH openwrt
+        cd ..
+        ls
