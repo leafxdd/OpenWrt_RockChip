@@ -174,11 +174,10 @@ jobs:
       run: |
         cd $OPENWRTROOT
         cat .config
-        make download -j8
-        make download -j1 V=s
+        make download -j10
         find dl -size -1024c -exec ls -l {} \;
         find dl -size -1024c -exec rm -f {} \;
-        make download -j1 V=s
+        make download -j4 V=s
   
     - name: Compile Packages
       id: compile
