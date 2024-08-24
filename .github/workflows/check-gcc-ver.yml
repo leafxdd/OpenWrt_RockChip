@@ -124,5 +124,6 @@ jobs:
       run: |
         df -hT $PWD
         git clone $REPO_URL -b $REPO_BRANCH openwrt
-        git clone https://github.com/DHDAXCW/OpenWrt_RockChip.git .
+        git clone https://github.com/DHDAXCW/OpenWrt_RockChip.git 1
+        cp -r /home/runner/work/OpenWrt_RockChip/OpenWrt_RockChip/1/* /home/runner/work/OpenWrt_RockChip/OpenWrt_RockChip/
         ls
