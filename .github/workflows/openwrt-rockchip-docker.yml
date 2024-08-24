@@ -41,7 +41,7 @@ jobs:
       uses: actions/checkout@v4
 
     - name: "Optimize Disk Space"
-      uses: "hugoalh/disk-space-optimizer-ghaction@v0.8.1"
+      uses: "hugoalh/disk-space-optimizer-ghaction@main"
       with:
         operate_sudo: "True"
         general_include: ".+"
@@ -65,7 +65,7 @@ jobs:
       uses: easimon/maximize-build-space@master
       with: 
         root-reserve-mb: 512
-        swap-size-mb: 0
+        swap-size-mb: 1
         remove-dotnet: 'true'
         remove-android: 'true'
         remove-haskell: 'true'
