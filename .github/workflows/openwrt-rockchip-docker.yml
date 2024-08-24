@@ -41,7 +41,7 @@ jobs:
       uses: actions/checkout@v4
 
     - name: "Optimize Disk Space"
-      uses: "hugoalh/disk-space-optimizer-ghaction@main"
+      uses: "hugoalh/disk-space-optimizer-ghaction@v0.8.1"
       with:
         operate_sudo: "True"
         general_include: ".+"
