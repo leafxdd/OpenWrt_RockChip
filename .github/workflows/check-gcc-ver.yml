@@ -63,7 +63,7 @@ jobs:
         ulimit -a
 
     - name: Setup GCC
-      uses: egor-tensin/setup-gcc@vmaster
+      uses: egor-tensin/setup-gcc@master
       with:
         version: 13
   
