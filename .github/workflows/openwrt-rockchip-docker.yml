@@ -76,14 +76,15 @@ jobs:
         ulimit -a
         
     - name: Setup GCC
-      uses: Dup4/actions-setup-gcc@v1
+      uses: egor-tensin/setup-gcc@master
       with:
-        version: latest
+        version: 13
 
     - name: Make Sure Gcc Is Correct
       run: |
         gcc -v
         g++ -v
+        clang -v
         
     - name: Clone Source Code
       run: |
