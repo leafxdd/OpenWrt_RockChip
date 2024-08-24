@@ -120,7 +120,6 @@ jobs:
         echo "------------------------------------------------------------"
         
     - name: Clone Source Code
-      working-directory: ./
       run: |
         df -hT $PWD
         git clone $REPO_URL -b $REPO_BRANCH openwrt
