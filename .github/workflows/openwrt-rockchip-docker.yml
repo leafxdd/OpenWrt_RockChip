@@ -87,7 +87,7 @@ jobs:
     - name: Freeing up disk space
       uses: easimon/maximize-build-space@master
       with: 
-        root-reserve-mb: 512
+        root-reserve-mb: 3072
         swap-size-mb: 1
         remove-dotnet: 'true'
         remove-android: 'true'
@@ -295,4 +295,3 @@ jobs:
           delete_tags: true
       env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
