@@ -45,11 +45,6 @@ jobs:
       with:
         operate_sudo: "True"
         general_include: ".+"
-        general_exclude: |-
-          ^GCC$
-          ^G\+\+$
-          Clang
-          LLVM
         docker_include: ".+"
         docker_prune: "True"
         docker_clean: "True"
@@ -64,7 +59,7 @@ jobs:
     - name: Freeing up disk space
       uses: easimon/maximize-build-space@master
       with: 
-        root-reserve-mb: 3072
+        root-reserve-mb: 2048
         swap-size-mb: 1
         remove-dotnet: 'true'
         remove-android: 'true'
