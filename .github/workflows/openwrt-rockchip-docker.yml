@@ -45,6 +45,11 @@ jobs:
       with:
         operate_sudo: "True"
         general_include: ".+"
+        general_exclude: |-
+          ^GCC$
+          ^G\+\+$
+          Clang
+          LLVM
         docker_include: ".+"
         docker_prune: "True"
         docker_clean: "True"
