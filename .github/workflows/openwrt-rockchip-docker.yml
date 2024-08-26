@@ -24,6 +24,7 @@ env:
   KMODS_IN_FIRMWARE: true
   UPLOAD_RELEASE: true
   TZ: Asia/Shanghai
+  GITHUB_TOKEN: ${{ secrets.TOKEN }}
 
 jobs:
   Build:
@@ -269,7 +270,7 @@ jobs:
       uses: softprops/action-gh-release@master
       if: steps.tag.outputs.status == 'success' && !cancelled()
       env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.TOKEN }}
       with:
           name: ${{ steps.tag.outputs.release_date }} openwrt-rockchip-armv8-docker 下载固件
           tag_name: ${{ steps.tag.outputs.release_tag }}
@@ -279,8 +280,9 @@ jobs:
     - name: Delete workflow runs
       uses: Mattraks/delete-workflow-runs@v2
       with:
-          retain_days: 30
-          keep_minimum_runs: 6
+          token: ${{ env.GITHUB_TOKEN }}
+          retain_days: 1
+          keep_minimum_runs: 1
 
     - name: Remove old Releases
       uses: dev-drprasad/delete-older-releases@v0.3.4
@@ -289,4 +291,4 @@ jobs:
           keep_latest: 20
           delete_tags: true
       env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.TOKEN }}
