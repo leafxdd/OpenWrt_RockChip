@@ -265,17 +265,13 @@ jobs:
           touch release.txt
           echo "后台地址：192.168.11.1" >> release.txt
           echo "status=success" >> $GITHUB_OUTPUT
-          
-    - name: Upload firmware to release
-      uses: softprops/action-gh-release@master
+
+    - name: 上传固件在 github Artifacts
       if: steps.tag.outputs.status == 'success' && !cancelled()
-      env:
-          GITHUB_TOKEN: ${{ secrets.TOKEN }}
+      uses: actions/upload-artifact@main
       with:
-          name: ${{ steps.tag.outputs.release_date }} openwrt-rockchip-armv8-docker 下载固件
-          tag_name: ${{ steps.tag.outputs.release_tag }}
-          body_path: release.txt
-          files: ${{ env.FIRMWARE }}/*
+        name: ${{ steps.tag.outputs.release_date }} openwrt-rockchip-armv8-docker 下载固件
+        path: ${{ env.FIRMWARE }}/
 
     - name: Delete workflow runs
       uses: Mattraks/delete-workflow-runs@v2
