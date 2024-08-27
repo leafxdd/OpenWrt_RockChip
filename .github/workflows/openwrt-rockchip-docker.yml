@@ -259,18 +259,21 @@ jobs:
       id: tag
       if: env.UPLOAD_RELEASE == 'true' && !cancelled()
       run: |
-          echo "release_tag=$(date +"%Y.%m.%d")-rockchip" >> $GITHUB_OUTPUT
+          echo "release_tag=$(date +"%Y.%m.%d")-rockchip-docker" >> $GITHUB_OUTPUT
           echo "release_date=$(date +"%Y.%m.%d")" >> $GITHUB_OUTPUT
           touch release.txt
           echo "后台地址：192.168.11.1" >> release.txt
           echo "status=success" >> $GITHUB_OUTPUT
 
-    - name: Upload firmware github Artifacts
+    - name: Upload firmware to release
       if: steps.tag.outputs.status == 'success' && !cancelled()
-      uses: actions/upload-artifact@main
+      uses: ncipollo/release-action@v1
       with:
-        name: openwrt-rockchip-armv8-docker
-        path: ${{ env.FIRMWARE }}/
+        name: "${{ steps.tag.outputs.release_date }} openwrt-rockchip-armv8-docker 下载固件"
+        tag: "${{ steps.tag.outputs.release_tag }}"
+        token: ${{ secrets.TOKEN }}
+        artifacts: "${{ env.FIRMWARE }}/*"
+        bodyFile: "release.txt"
 
     - name: Delete workflow runs
       uses: Mattraks/delete-workflow-runs@v2
