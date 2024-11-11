@@ -132,12 +132,12 @@ jobs:
     - name: Install Feeds
       run: |
         cd $OPENWRTROOT
-        rm -rf feeds/smpackage/{base-files,dnsmasq,firewall*,fullconenat,libnftnl,nftables,ppp,opkg,ucl,upx,vsftpd*,miniupnpd-iptables,wireless-regdb}
-        ./scripts/feeds install -a
+        rm -rf feeds/smpackage/{base-files,dnsmasq,firewall*,fullconenat*,libnftnl,nftables,ppp,opkg,ucl,upx,vsftpd*,miniupnpd-iptables,wireless-regdb,docker*}
+        rm -rf feeds/smpackage/{luci-app-dnsmasq-ipset,luci-app-fullconenat,luci-app-qbittorrent,qbittorrent,luci-app-dogcom,openwrt-minieap,UA2F,luci-app-torbp,luci-app-mentohust,MentoHUST-OpenWrt-ipk,luci-app-bmtedge,natflow,mentohust,luci-app-dockerman}
         rm -rf feeds/packages/lang/golang
         git clone https://github.com/sbwml/packages_lang_golang -b 23.x feeds/packages/lang/golang
-        rm -rf feeds/packages/smpackage/luci-app-qbittorrent
-        rm -rf feeds/packages/smpackage/qbittorrent
+        ./scripts/feeds install -a
+        
         
     - name: Load Custom Configuration
       run: |
@@ -160,17 +160,12 @@ jobs:
         find dl -size -1024c -exec rm -f {} \;
         make download -j4 V=s
   
-    - name: Compile Packages
+    - name: Compile
       id: compile
       run: |
         cd $OPENWRTROOT
         echo -e "$(nproc) thread compile"
-        make tools/compile -j$(nproc) || make tools/compile -j1 V=s
-        make toolchain/compile -j$(nproc) || make toolchain/compile -j1 V=s
-        make target/compile -j$(nproc) || make target/compile -j1 V=s
-        make diffconfig
-        make package/compile -j$(nproc) || make package/compile -j1 V=s
-        make package/index
+        make -j$(nproc) || make -j1 V=s
         cd $OPENWRTROOT/bin/packages/*
         PLATFORM=$(basename `pwd`)
         echo "PLATFORM=$PLATFORM" >> $GITHUB_ENV
@@ -187,12 +182,10 @@ jobs:
         echo "FIRMWARE=$PWD" >> $GITHUB_OUTPUT
         echo "COMPILE_STATUS=success" >> $GITHUB_OUTPUT
         
-    - name: Generate Firmware
+    - name: Generate
       if: steps.compile.outputs.COMPILE_STATUS == 'success'
       id: generate
       run: |
-        make package/install -j$(nproc) || make package/install -j1 V=s
-        make target/install -j$(nproc) || make target/install -j1 V=s
         pushd bin/targets/rockchip/armv8
         rm -rf *ext4* *.manifest packages *.json *.buildinfo
         mv openwrt-rockchip-armv8-friendlyarm_nanopc-t6-squashfs-sysupgrade.img.gz $(date +"%Y.%m.%d")-openwrt-friendlyarm_nanopc-t6-squashfs-sysupgrade.img.gz
