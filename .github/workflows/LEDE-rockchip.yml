@@ -133,10 +133,12 @@ jobs:
       run: |
         cd $OPENWRTROOT
         rm -rf feeds/smpackage/{base-files,dnsmasq,firewall*,fullconenat*,libnftnl,nftables,ppp,opkg,ucl,upx,vsftpd*,miniupnpd-iptables,wireless-regdb,docker*}
-        rm -rf feeds/smpackage/{luci-app-dnsmasq-ipset,luci-app-fullconenat,luci-app-qbittorrent,qbittorrent,luci-app-dogcom,openwrt-minieap,UA2F,luci-app-torbp,luci-app-mentohust,MentoHUST-OpenWrt-ipk,luci-app-bmtedge,natflow,mentohust,luci-app-dockerman}
+        rm -rf feeds/smpackage/{luci-app-openclash,luci-app-dnsmasq-ipset,luci-app-fullconenat,luci-app-qbittorrent,qbittorrent,luci-app-dogcom,openwrt-minieap,UA2F,luci-app-torbp,luci-app-mentohust,MentoHUST-OpenWrt-ipk,luci-app-bmtedge,natflow,mentohust,luci-app-dockerman}
         rm -rf feeds/packages/lang/golang
         git clone https://github.com/sbwml/packages_lang_golang -b 23.x feeds/packages/lang/golang
+        rm -rf feeds/luci/applications/luci-app-openclash
         ./scripts/feeds install -a
+        git clone --depth=1 -b dev https://github.com/vernesong/OpenClash package/
         
         
     - name: Load Custom Configuration
