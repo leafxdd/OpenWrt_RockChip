@@ -79,6 +79,7 @@ jobs:
       run: |
         sudo bash -c 'bash <(curl -sL https://build-scripts.immortalwrt.org/init_build_environment.sh)'
         sudo -E apt-get -qq install libfuse-dev
+        sudo -E apt-get -qq install libntirpc-dev
 
     - name: Setup GCC
       uses: egor-tensin/setup-gcc@master
