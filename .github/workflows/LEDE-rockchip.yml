@@ -140,7 +140,7 @@ jobs:
         git clone https://github.com/sbwml/packages_lang_golang -b 23.x feeds/packages/lang/golang
         rm -rf feeds/luci/applications/luci-app-openclash
         ./scripts/feeds install -a
-        git clone --depth=1 https://github.com/vernesong/OpenClash package/openclash
+        git clone --depth=1 -b dev https://github.com/vernesong/OpenClash package/openclash
         git clone --depth=1 https://github.com/jerrykuku/luci-theme-argon package/luci-theme-argon
         git clone --depth=1 https://github.com/jerrykuku/luci-app-argon-config package/luci-app-argon-config
         cp -f $GITHUB_WORKSPACE/data/bg1.jpg package/luci-theme-argon/htdocs/luci-static/argon/background/bg1.jpg
