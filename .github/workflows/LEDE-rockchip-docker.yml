@@ -128,19 +128,20 @@ jobs:
         echo "OPENWRTROOT=$PWD" >> $GITHUB_ENV
         echo "OPENWRTROOT=$PWD" >> $GITHUB_OUTPUT
         sed -i '$a src-git smpackage https://github.com/kenzok8/small-package' feeds.conf.default
+        echo 'src-git istore https://github.com/linkease/istore;main' >> feeds.conf.default
         ./scripts/feeds update -a
         
     - name: Install Feeds
       run: |
         cd $OPENWRTROOT
-        rm -rf feeds/smpackage/{base-files,dnsmasq,firewall*,fullconenat*,libnftnl,nftables,ppp,opkg,ucl,upx,vsftpd*,miniupnpd-iptables,wireless-regdb,docker*,luci-theme-*,luci-app-argon*}
+        rm -rf feeds/smpackage/{base-files,dnsmasq,firewall*,fullconenat*,libnftnl,nftables,ppp,opkg,ucl,upx,vsftpd*,miniupnpd-iptables,wireless-regdb,docker*,luci-app-argon*}
         rm -rf feeds/smpackage/{luci-app-openclash,luci-app-dnsmasq-ipset,luci-app-fullconenat,luci-app-qbittorrent,qbittorrent,luci-app-dogcom,openwrt-minieap,UA2F,luci-app-torbp,luci-app-mentohust,MentoHUST-OpenWrt-ipk,luci-app-bmtedge,natflow,mentohust,luci-app-dockerman}
         rm -rf feeds/packages/lang/golang
         rm -rf feeds/luci/themes/luci-theme-argon
         git clone https://github.com/sbwml/packages_lang_golang -b 23.x feeds/packages/lang/golang
         rm -rf feeds/luci/applications/luci-app-openclash
         ./scripts/feeds install -a
-        git clone --depth=1 https://github.com/vernesong/OpenClash package/openclash
+        git clone --depth=1 -b dev https://github.com/vernesong/OpenClash package/openclash
         git clone --depth=1 https://github.com/jerrykuku/luci-theme-argon package/luci-theme-argon
         git clone --depth=1 https://github.com/jerrykuku/luci-app-argon-config package/luci-app-argon-config
         cp -f $GITHUB_WORKSPACE/data/bg1.jpg package/luci-theme-argon/htdocs/luci-static/argon/background/bg1.jpg
@@ -239,6 +240,7 @@ jobs:
         mv openwrt-rockchip-armv8-friendlyarm_nanopc-t6-squashfs-sysupgrade.img.gz $(date +"%Y.%m.%d")-docker-openwrt-friendlyarm_nanopc-t6-squashfs-sysupgrade.img.gz
         mv openwrt-rockchip-armv8-friendlyarm_nanopi-r2c-squashfs-sysupgrade.img.gz $(date +"%Y.%m.%d")-docker-openwrt-friendlyarm_nanopi-r2c-squashfs-sysupgrade.img.gz
         mv openwrt-rockchip-armv8-friendlyarm_nanopi-r2s-squashfs-sysupgrade.img.gz $(date +"%Y.%m.%d")-docker-openwrt-friendlyarm_nanopi-r2s-squashfs-sysupgrade.img.gz
+        mv openwrt-rockchip-armv8-friendlyarm_nanopi-r3s-squashfs-sysupgrade.img.gz $(date +"%Y.%m.%d")-docker-openwrt-friendlyarm_nanopi-r3s-squashfs-sysupgrade.img.gz
         mv openwrt-rockchip-armv8-friendlyarm_nanopi-r4se-squashfs-sysupgrade.img.gz $(date +"%Y.%m.%d")-docker-openwrt-friendlyarm_nanopi-r4se-squashfs-sysupgrade.img.gz
         mv openwrt-rockchip-armv8-friendlyarm_nanopi-r4s-squashfs-sysupgrade.img.gz $(date +"%Y.%m.%d")-docker-openwrt-friendlyarm_nanopi-r4s-squashfs-sysupgrade.img.gz
         mv openwrt-rockchip-armv8-friendlyarm_nanopi-r5c-squashfs-sysupgrade.img.gz $(date +"%Y.%m.%d")-docker-openwrt-friendlyarm_nanopi-r5c-squashfs-sysupgrade.img.gz
