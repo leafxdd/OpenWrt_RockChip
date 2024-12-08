@@ -134,7 +134,7 @@ jobs:
     - name: Install Feeds
       run: |
         cd $OPENWRTROOT
-        rm -rf feeds/smpackage/{base-files,dnsmasq,firewall*,fullconenat*,libnftnl,nftables,ppp,opkg,ucl,upx,vsftpd*,miniupnpd-iptables,wireless-regdb,docker*,luci-theme-*,luci-app-argon*}
+        rm -rf feeds/smpackage/{base-files,dnsmasq,firewall*,fullconenat*,libnftnl,nftables,ppp,opkg,ucl,upx,vsftpd*,miniupnpd-iptables,wireless-regdb,docker*,luci-app-argon*}
         rm -rf feeds/smpackage/{luci-app-openclash,luci-app-dnsmasq-ipset,luci-app-fullconenat,luci-app-qbittorrent,qbittorrent,luci-app-dogcom,openwrt-minieap,UA2F,luci-app-torbp,luci-app-mentohust,MentoHUST-OpenWrt-ipk,luci-app-bmtedge,natflow,mentohust,luci-app-dockerman}
         rm -rf feeds/packages/lang/golang
         rm -rf feeds/luci/themes/luci-theme-argon
