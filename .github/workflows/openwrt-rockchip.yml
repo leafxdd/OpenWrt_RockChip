@@ -21,7 +21,7 @@ env:
   REPO_BRANCH: stable
   CONFIG_FILE: configs/lede/full.config
   DIY_SH: scripts/lede.sh
-  KMODS_IN_FIRMWARE: false
+  KMODS_IN_FIRMWARE: true
   UPLOAD_RELEASE: true
   TZ: Asia/Shanghai
   GITHUB_TOKEN: ${{ secrets.TOKEN }}
