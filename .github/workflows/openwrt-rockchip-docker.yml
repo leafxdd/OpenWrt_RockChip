@@ -21,7 +21,7 @@ env:
   REPO_BRANCH: stable
   CONFIG_FILE: configs/lede/full.config
   DIY_SH: scripts/lede.sh
-  KMODS_IN_FIRMWARE: false
+  KMODS_IN_FIRMWARE: ture
   UPLOAD_RELEASE: true
   TZ: Asia/Shanghai
   GITHUB_TOKEN: ${{ secrets.TOKEN }}
@@ -145,7 +145,7 @@ jobs:
         git clone --depth=1 -b dev https://github.com/vernesong/OpenClash package/openclash
         git clone -b lua https://github.com/sbwml/luci-app-alist package/alist
         git clone --depth=1 -b 18.06 https://github.com/jerrykuku/luci-theme-argon package/luci-theme-argon
-        git clone --depth=1 -b 18.06 https://github.com/jerrykuku/luci-app-argon-config package/luci-app-argon-config
+        git clone --depth=1 https://github.com/jerrykuku/luci-app-argon-config package/luci-app-argon-config
         rm -rf package/luci-theme-argon/htdocs/luci-static/argon/img/bg1.jpg
         cp -f $GITHUB_WORKSPACE/data/bg1.jpg package/luci-theme-argon/htdocs/luci-static/argon/img/bg1.jpg
         
